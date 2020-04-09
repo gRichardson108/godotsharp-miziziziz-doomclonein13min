@@ -10,11 +10,13 @@ public class Player : KinematicBody
 	private RayCast rayCast;
 
 	// Called when the node enters the scene tree for the first time.
-	public override void _Ready()
+	public override async void _Ready()
 	{
 		animPlayer = GetNode<AnimationPlayer>("AnimationPlayer");
 		rayCast = GetNode<RayCast>("RayCast");
 		Input.SetMouseMode(Input.MouseMode.Captured);
+
+		await ToSignal(GetTree(), "idle_frame");
 		GetTree().CallGroup("zombies", "SetPlayer", this);
 	}
 	
@@ -69,9 +71,9 @@ public class Player : KinematicBody
 			animPlayer.Play("shoot");
 			// shoot the bullet as a hitscan ray
 			var coll = rayCast.GetCollider();
-			if (rayCast.IsColliding() && coll.HasMethod("kill"))
+			if (rayCast.IsColliding() && coll.HasMethod("Kill"))
 			{
-				coll.Call("kill");
+				coll.Call("Kill");
 			}
 		}
 	}
