@@ -56,7 +56,7 @@ public class Player : KinematicBody
 		{
 			moveVec.x -= 1;
 		}
-		if (Input.IsActionPressed("move_forwards"))
+		if (Input.IsActionPressed("move_right"))
 		{
 			moveVec.x += 1;
 		}
